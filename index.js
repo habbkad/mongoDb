@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cookieParser = require("cookie-parser");
 const adminRoutes = require("./routes/admin_routes");
+const userRoutes = require("./routes/user_routes");
 
 //mogoDb uri
 const URI =
@@ -8,6 +10,9 @@ const URI =
 
 //create server
 const app = express();
+
+//cookie parser middleware
+app.use(cookieParser());
 
 //connect to mongoDb
 const connectDb = mongoose.connect(URI);
@@ -22,6 +27,7 @@ connectDb
 app.use(express.json()); //body parser
 //routes
 app.use("/blog", adminRoutes);
+app.use("/auth", userRoutes);
 
 const PORT = 4000;
 app.listen(PORT, () => {
